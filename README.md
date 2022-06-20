@@ -15,3 +15,12 @@ teraz ważne jest aby uzupełnić `config.js` i `.env` \
 kiedy wszystko jest gotowe wystarczy wpisać `node .` \
 a bot się uruchomi \
 ~~starałem się to na maxa prosto zrobić aby każdy zrozumiał~~
+
+
+
+
+
+
+
+a i jakby ktoś pytał wywaliłem z tej wersji slash commands bo to jest w zasadzie dosłownie to co na 
+djs guide i uważam że bez sensu aby to tu było
