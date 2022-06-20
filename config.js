@@ -1,9 +1,9 @@
 const dotenv = require("dotenv").config();
 module.exports = {
-	"ownerID": "302872992097107991",
+	"ownerID": "twoje id",
 	"token": process.env.token,
-	"prefix": "J!",
-	"clientId": "303050328918458368",
+	"prefix": "!",
+	"clientId": "id bota",
 	"mongo": process.env.mongo,
-	"version": "1.0.0"
+	"version": "1.1.0"
 	}
