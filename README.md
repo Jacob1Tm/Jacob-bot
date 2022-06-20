@@ -17,11 +17,9 @@ kiedy wszystko jest gotowe wystarczy wpisać `node .` \
 a bot się uruchomi \
 ~~starałem się to na maxa prosto zrobić aby każdy zrozumiał~~
 
-
-
-
-
-
+### Jeszcze chciałbym zaprosić na swój serwer discord jakby ktoś chciał dołączyć
+[![https://discord.com/api/guilds/826740275460046858/embed.png?style=banner4](https://discord.com/api/guilds/826740275460046858/embed.png?style=banner4)](https://discord.gg/WBhQPFZrPM)
 
 a i jakby ktoś pytał wywaliłem z tej wersji slash commands bo to jest w zasadzie dosłownie to co na 
 djs guide i uważam że bez sensu aby to tu było
+
