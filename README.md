@@ -9,6 +9,7 @@ Najpierw pobieramy repo, aby pobrać repo zalecam użyć\
 git pobierze pliki\
 ~~jeżeli nie masz git\'a możesz go pobrać [tutaj](https://git-scm.com/downloads "tutaj")~~ \
 ewentualnie możesz użyć przycisku `Code` i pobrać zipa \
+a i jeszcze można teraz w [relases](https://github.com/Jacob1Tm/Jacob-bot/releases "relases") \
 Wchodzimy w folder i w cmd wpisujemy `npm i` \
 pobierze to nam wymagane paczki
 teraz ważne jest aby uzupełnić `config.js` i `.env` \
