@@ -1,4 +1,4 @@
-const {randomstatus} = require("./../../funkcje.js");
+const {randomstatus: RandomStatus} = require("./../../funkcje.js");
 module.exports = {
     name: 'status',
     aliases: ['s'],
@@ -6,48 +6,20 @@ module.exports = {
     category: 'developer',
     description: 'zmienia status bota',
     execute(message, args, client) {
-        //kiedyś to przerobię na razie niech będzie tak
-        const tekst = args.slice(1).join(' ');
-        if (args[0] === "PLAYING".toLowerCase()) {
+        const presenceStatuses = ["WATCHING", "PLAYING", "LISTENING", "STREAMING"];
+        const statuses = ["available", "invisible", "idle", "dnd"];
+        const text = args.slice(2).join(' ');
+        if(presenceStatuses.includes(args[0].toUpperCase()) && statuses.includes(args[1].toLowerCase())) {
             global.customstatus = true;
-            client.user.setActivity(tekst, {
-                type: "PLAYING",
+            client.user.setActivity(text, {
+                type: args[0].toUpperCase(),
             });
-        } else if (args[0].toUpperCase() === "WATCHING") {
-            global.customstatus = true;
-            client.user.setActivity(tekst, {
-                type: "WATCHING",
-            });
-        } else if (args[0].toUpperCase() === "WATCHING") {
-            global.customstatus = true;
-            client.user.setActivity(tekst, {
-                type: "WATCHING",
-            });
-        } else if (args[0].toUpperCase() === "STREAMING") {
-            global.customstatus = true;
-            client.user.setActivity(tekst, {
-                type: "STREAMING",
-            });
-        } else if (args[0].toUpperCase() === "LISTENING") {
-            global.customstatus = true;
-            client.user.setActivity(tekst, {
-                type: "LISTENING",
-            });
-        } else if (args[0].toUpperCase() === "ONLINE") {
-            global.customstatus = true;
-            client.user.setStatus('available')
-        } else if (args[0].toUpperCase() === "DND") {
-            global.customstatus = true;
-            client.user.setStatus('dnd')
-        } else if (args[0].toUpperCase() === "IDLE") {
-            global.customstatus = true;
-            client.user.setStatus('idle')
-        } else if (args[0].toUpperCase() === "INVISIBLE") {
-            global.customstatus = true;
-            client.user.setStatus('invisible')
-        } else if (args[0].toUpperCase() === "NONE") {
-            global.customstatus = true;
-            randomstatus(client);
-        } else (message.channel.send({ content: 'Podaj argument **PLAYING, STREAMING, LISTENING, WATCHING, online, dnd, idle, invisible**'}))
+            client.user.setStatus(args[1].toLowerCase());
+            message.channel.send(`Nowy status: \`${args[0]}: ${text}\` (${args[1]})`);
+        } else if(args[0].toUpperCase() == "NONE") {
+            global.customstatus = false;
+            RandomStatus(client);
+            message.channel.send("Wyłączono customowy status: wracam do normalnego statusu.");
+        } else message.channel.send(`Taki typ statusu nie istnieje, jako pierwszy argument podaj ${presenceStatuses.map(i => `\`${i}\``).join(", ")}.`);
     }
     }
