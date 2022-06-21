@@ -5,7 +5,7 @@ module.exports = {
 	"prefix": "J!",
 	"clientId": "303050328918458368",
 	"mongo": process.env.mongo,
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"errorchannel": "<id kanału na errory>",
 	"abusechannel": "<id kanału na logi nadużyć>"
 	}
