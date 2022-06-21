@@ -1,7 +1,7 @@
 ### Wymagania
 [Node 16](https://nodejs.org/en/ "Node 16")\
 Npm (jest on wbudowany w node)\
-[MonoDd](https://www.mongodb.com "MonoDd") (opcjonalne)\
+[MongoDB](https://www.mongodb.com "MongoDB") (opcjonalne)\
 ~~i chyba tyle~~
 ### Uruchamianie
 Najpierw pobieramy repo, aby pobrać repo zalecam użyć\
