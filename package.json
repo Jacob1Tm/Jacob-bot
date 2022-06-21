@@ -98,7 +98,6 @@
     "string_decoder": "^1.1.1",
     "string-width": "^5.1.0",
     "strip-ansi": "^7.0.1",
-    "superagent": "^6.1.0",
     "tar": "^6.1.11",
     "tiny-typed-emitter": "^2.1.0",
     "typedarray": "^0.0.6",
