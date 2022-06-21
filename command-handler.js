@@ -41,10 +41,6 @@ module.exports = (client) => {
 
     //handler
     client.on('messageCreate', message => {
-        if (message.channel.id === "961979130679812133") {
-            if (message.content.toLowerCase() !== `${prefix.toLowerCase()}weryfikacja` && !message.author.bot) return message.delete();
-        }
-
         if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -82,10 +78,10 @@ module.exports = (client) => {
 
         if (command.userPermissions && command.userPermissions.length) {
             if (message.content.includes(" -w") && message.author.id === global.owner && !message.member.permissionsIn(message.channel).has(command.userPermissions)) {
-                message.channel.send("Użycie Komendy zostanie wymuszone a informacja zostanie wysłana na kanał <#965602437618626582>")
-                client.channels.cache.get("965602437618626582").send(`użytkownik \`${message.author.username}\` (${message.author.id}) wymusił użycie komendy \`${command.name}\` na serwerze \`${message.guild.name}\` (${message.guild.id})`)
+                message.channel.send(`Użycie Komendy zostanie wymuszone a informacja zostanie wysłana na kanał <#${config.abusechannel}>`)
+                client.channels.cache.get(config.abusechannel).send(`użytkownik \`${message.author.username}\` (${message.author.id}) wymusił użycie komendy \`${command.name}\` na serwerze \`${message.guild.name}\` (${message.guild.id})`)
             } else if (message.author.id === global.owner && message.member.permissionsIn(message.channel).has(command.userPermissions)) {
-            message.channel.send("Posiadasz uprawnienia do wykonania tej komendy, komenda nie zostanie wymuszona <:dobrymem:863841530041073684>")
+            message.channel.send("Posiadasz uprawnienia do wykonania tej komendy, komenda nie zostanie wymuszona.")
             } else if (!message.member.permissionsIn(message.channel).has(command.userPermissions)) {
                 embed.setColor("#ff0000")
                 embed.setDescription(':x: Nie masz permisji do wykonania tej komendy.')
@@ -154,7 +150,7 @@ module.exports = (client) => {
             if (command.name === "kalkulator") return message.channel.send("Nieprawidłowe Działanie")
             console.error(error);
             message.channel.send({content: 'Wystąpił błąd'});
-            client.channels.cache.get('906550145213145119').send({content: `Wystąpił błąd podczas używania komendy \`${command.name}\`, użył jej użytkownik o ID ${message.author.id} (${message.author.tag}).\nTreść błędu:\n\`\`\`${error}\`\`\``});
+            client.channels.cache.get(config.errorchannel).send({content: `Wystąpił błąd podczas używania komendy \`${command.name}\`, użył jej użytkownik o ID ${message.author.id} (${message.author.tag}).\nTreść błędu:\n\`\`\`${error}\`\`\``});
         }
     });
     client.on('messageCreate', message => {
