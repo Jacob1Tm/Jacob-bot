@@ -13,7 +13,9 @@ module.exports = {
                 console.dir(err);
                 return;
             }
-            message.channel.send({content:'UWAGA! Jeżeli wiadomość jest zbyt długa zepsuje się <:dobrymem:863841530041073684>'})
+            if (data.size > 2000) {
+                return message.channel.send("Tekst jest za długi, max 2000 znaków.");
+            }
             message.channel.send({content:`\`\`\`\n${data}\n\`\`\``})
         });
     },
