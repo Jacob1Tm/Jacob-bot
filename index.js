@@ -32,7 +32,6 @@ mongoose.connect(config.mongo, {
 client.on("ready", async () => {
 	console.log(`${client.user.tag} włączony!`);
 	client.user.setActivity(`Dzień dobry! | Wersja ${global.v}`, { type: "PLAYING" });
-	global.ownertag = client.users.cache.get(global.owner).tag
 		setInterval(() => {
 			if (global.customstatus === false) {
 				randomstatus(client);
