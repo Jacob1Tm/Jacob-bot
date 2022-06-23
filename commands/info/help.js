@@ -66,31 +66,11 @@ module.exports = {
                     break;
                 default:
                     if (message.author.id === global.owner) {
-                        embed.setDescription(`
-                            Prefix bota: ${global.prefix}
-                            Twórcą bota jest: ${client.users.cache.get(global.owner).tag}
-                            
-                            **Lista kategorii**:
-                            \`info\` (${arrayinfo.size}): W tej kategorii znajdują się komendy z różnymi informacjami.
-                            \`moderacja\` (${arraymod.size}): W tej kategorii znajdują się komendy do moderacji.
-                            \`zabawa\` (${arrayfun.size}): W tej kategorii znajdują się komendy 4Fun.
-                            \`zdjęcia\` (${arrayzdj.size}): W tej kategorii znajdują się komendy dotyczące zdjęć.
-                            \`muzyka\` (${arraymus.size}): W tej kategorii znajdują się komendy dotyczące muzyki.
-                            \`developer\` (${arraydev.size}): W tej kategorii znajdują się komendy developera.
-                        `)
+                        //wie ktoś może jak to podzielić na linijki aby na telefonie to normalnie wyglądało XD
+                        embed.setDescription(`Prefix bota: ${global.prefix}\nTwórcą bota jest: ${client.users.cache.get(global.owner).tag}\n\n**Lista kategorii**:\n\`info\` (${arrayinfo.size}): W tej kategorii znajdują się komendy z różnymi informacjami.\n\`moderacja\` (${arraymod.size}): W tej kategorii znajdują się komendy do moderacji.\n\`zabawa\` (${arrayfun.size}): W tej kategorii znajdują się komendy 4Fun.\n\`zdjęcia\` (${arrayzdj.size}): W tej kategorii znajdują się komendy dotyczące zdjęć.\n\`muzyka\` (${arraymus.size}): W tej kategorii znajdują się komendy dotyczące muzyki.\n\`developer\` (${arraydev.size}): W tej kategorii znajdują się komendy developera.`)
                         message.channel.send({embeds: [embed]})
                     } else {
-                        embed.setDescription(`
-                        Prefix bota: ${global.prefix}
-                        Twórcą bota jest: ${client.users.cache.get(global.owner).tag}
-                        
-                        **Lista kategorii**:
-                        \`info\` (${arrayinfo.size}): W tej kategorii znajdują się komendy z różnymi informacjami.
-                        \`moderacja\` (${arraymod.size}): W tej kategorii znajdują się komendy do moderacji.
-                        \`zabawa\` (${arrayfun.size}): W tej kategorii znajdują się komendy 4Fun.
-                        \`zdjęcia\` (${arrayzdj.size}): W tej kategorii znajdują się komendy dotyczące zdjęć.
-                        \`muzyka\` (${arraymus.size}): W tej kategorii znajdują się komendy dotyczące muzyki.
-                        `)
+                        embed.setDescription(`Prefix bota: ${global.prefix}\nTwórcą bota jest: ${client.users.cache.get(global.owner).tag}\n\n**Lista kategorii**:\n\`info\` (${arrayinfo.size}): W tej kategorii znajdują się komendy z różnymi informacjami.\n\`moderacja\` (${arraymod.size}): W tej kategorii znajdują się komendy do moderacji.\n\`zabawa\` (${arrayfun.size}): W tej kategorii znajdują się komendy 4Fun.\n\`zdjęcia\` (${arrayzdj.size}): W tej kategorii znajdują się komendy dotyczące zdjęć.\n\`muzyka\` (${arraymus.size}): W tej kategorii znajdują się komendy dotyczące muzyki.\n`)
                         message.channel.send({embeds: [embed]})
                     }
         }}}
