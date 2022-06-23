@@ -1,6 +1,4 @@
 const commandHandler = require("./command-handler");
-const slashHandler = require("./slash-handler");
-const deploycommand = require("./deploy-commands");
 const { Client, Intents } = require('discord.js');
 const { token } = require('./config.js');
 const config = require('./config.js')
