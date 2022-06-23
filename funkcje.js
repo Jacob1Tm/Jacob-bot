@@ -14,7 +14,7 @@ module.exports = {
             `Używany przez ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}  użytkowników`,
             `Prefiks: ${global.prefix}`,
             `Wersja: ${global.v}`,
-            `Twórca: ${global.ownertag}`,
+            `Twórca: ${client.users.cache.get(global.owner).tag}`
         ]
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
     }
