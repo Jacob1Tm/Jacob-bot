@@ -14,7 +14,8 @@ module.exports = {
             `Używany przez ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}  użytkowników`,
             `Prefiks: ${global.prefix}`,
             `Wersja: ${global.v}`,
-            `Twórca: ${global.ownertag}`,
+            //hej wyłączone bo wywala z jakiegoś powodu jak ograne lub ktoś to będzie
+            //`Twórca: ${client.users.cache.get(global.owner).tag}`
         ]
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
     }
