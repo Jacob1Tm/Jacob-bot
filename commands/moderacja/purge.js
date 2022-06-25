@@ -16,15 +16,10 @@ module.exports = {
         embed2.setDescription(`:x: **${args[0]}** nie jest liczbą`)
         if(!args[0]) return message.channel.send({embeds: [embed]})
         if(isNaN(args[0])) return message.channel.send({embeds: [embed2]})
-        if(args[0] > 100) {
+        if(args[0] > 100 || args[0] < 2) {
             embed.setDescription(":x: " + " Błąd, możesz usuwać tylko liczby między 2 a 100 na raz!")
             message.channel.send({embeds: [embed]})
-        } else if(args[0] < 2) {
-            embed.setDescription(":x: " + " Błąd, możesz usuwać tylko liczby między 2 a 100 na raz!")
-            message.channel.send({embeds: [embed]})
-        }
-        else {
-
+        } else {
             message.channel.messages.fetch({limit: Number(liczba) + 1}).then(messages => message.channel.bulkDelete(messages, true));
             embed.setDescription(`:white_check_mark: ${liczba} wiadomości zostały usunięte`)
             message.channel.send({embeds: [embed]})
