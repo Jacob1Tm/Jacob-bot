@@ -2,7 +2,7 @@ const discord = require('discord.js')
 module.exports = {
 	name: 'awatar',
 	description: 'wysyła twój lub osoby oznaczonej awatar',
-	aliases: ['icon', 'pfp'],
+	aliases: ['icon', 'pfp', 'avatar'],
 	category: 'info',
 	execute(message) {
 		const embed = new discord.MessageEmbed()
@@ -13,11 +13,11 @@ module.exports = {
 			embed.setImage(message.author.displayAvatarURL({ dynamic: true }))
 			message.channel.send({embeds: [embed]})
 		}
-
-		const user = message.mentions.users.first();
+		else {
+			const user = message.mentions.users.first();
 			embed.setDescription(`Awatar użytkownika ${user.username}`)
-			embed.setImage(user.displayAvatarURL({ dynamic: true })
-		);
-		message.channel.send({embeds: [embed]});
-	},
+			embed.setImage(user.displayAvatarURL({dynamic: true})
+			);
+			message.channel.send({embeds: [embed]});
+		}},
 };
