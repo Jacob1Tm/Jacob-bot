@@ -8,7 +8,7 @@ module.exports = {
     sendtochannel(client, channel, message) {
         client.channels.cache.get(`${channel}`).send({content:message})
     },
-    randomstatus(client) {
+    randomStatus(client) {
         statuses = [
             `Używany przez ${client.guilds.cache.size} serwerów`,
             `Używany przez ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}  użytkowników`,

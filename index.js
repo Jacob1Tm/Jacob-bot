@@ -1,17 +1,27 @@
 const commandHandler = require("./command-handler");
+const slashHandler = require("./slash-handler");
+const deploycommand = require("./deploy-commands");
 const { Client, Intents } = require('discord.js');
 const { token } = require('./config.js');
 const config = require('./config.js')
 const mongoose = require("mongoose")
-const {randomstatus} = require("./funkcje.js")
+const {randomStatus} = require("./funkcje.js")
 global.owner = config.ownerID
 global.prefix = config.prefix
 global.v = config.version
 global.customstatus = false;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 commandHandler(client, config);
+slashHandler(client, config);
+deploycommand(client, config);
 
 client.login(token);
+
+let args = process.argv;
+console.log(args);
+
+let argsslicedby2 = args.slice(2);
+console.log(argsslicedby2);
 
 mongoose.connect(config.mongo, {
 	useNewUrlParser: true,
@@ -32,5 +42,5 @@ client.on("ready", async () => {
 	client.user.setActivity(`Dzień dobry! | Wersja ${global.v}`, { type: "PLAYING" });
 		setInterval(() => {
 			if (global.customstatus === false) {
-				randomstatus(client);
+				randomStatus(client);
 			}}, 600000)});

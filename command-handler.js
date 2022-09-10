@@ -41,6 +41,10 @@ module.exports = (client) => {
 
     //handler
     client.on('messageCreate', message => {
+        if (message.channel.id === "961979130679812133") {
+            if (message.content.toLowerCase() !== `${prefix.toLowerCase()}weryfikacja` && !message.author.bot) return message.delete();
+        }
+
         if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/);

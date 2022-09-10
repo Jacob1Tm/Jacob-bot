@@ -1,11 +1,13 @@
 const dotenv = require("dotenv").config();
+const launchargs = process.argv.slice(2);
+//jeżeli chcesz podawać token i dane do mongo możesz to zrobić tutaj albo w pliku .env
 module.exports = {
 	"ownerID": "302872992097107991",
-	"token": process.env.token,
-	"prefix": "J!",
-	"clientId": "303050328918458368",
-	"mongo": process.env.mongo,
-	"version": "1.1.1",
-	"errorchannel": "<id kanału na errory>",
-	"abusechannel": "<id kanału na logi nadużyć>"
+	"token": launchargs[0], //process.env.token
+	"prefix": "TJ!",
+	"clientId": "829697914712096810",
+	"mongo": launchargs[1], //process.env.mongo
+	"version": "1.1.0",
+	"errorchannel": "906550145213145119",
+	"abusechannel": "965602437618626582"
 	}
