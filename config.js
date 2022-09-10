@@ -7,7 +7,7 @@ module.exports = {
 	"prefix": "TJ!",
 	"clientId": "829697914712096810",
 	"mongo": launchargs[1], //process.env.mongo
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"errorchannel": "906550145213145119",
 	"abusechannel": "965602437618626582"
 	}
