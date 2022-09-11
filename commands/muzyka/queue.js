@@ -1,13 +1,15 @@
-const {MessageEmbed} = require("discord.js");
+const voice = require('@discordjs/voice');
+const {Message, MessageEmbed} = require("discord.js");
 const userModel = require("../../modele/userSchema");
 module.exports = {
-    name: 'stop',
-    description: 'Wyrzuca bota z kanału głosowego.',
+    name: 'queue',
+    description: 'Wyświetla kolejkę piosenek.',
     cooldown: 5,
     category: 'mus',
-    userPermissions: ["MANAGE_MESSAGES"],
+    aliases: ["kolejka"],
+    args: true,
     async execute(message, args, client) {
-        //kodzior od sprawdzania czy user może
+        //tutaj kodzior od blokowania jak się nie jest dodanym do tego
         if (global.databaseonline === true) {
             const userModel = require("../../modele/userSchema");
             const {MessageEmbed} = require("discord.js");
@@ -19,12 +21,11 @@ module.exports = {
             let user = await userModel.findOne({userID: `${id}`})
             if (!user) return message.channel.send({embeds: [embed]})
         }
-        //reszta od komendy
+        //tu samo play
         const guildID = message.guild.id;
         let guildQueue = client.player.getQueue(guildID)
-        if (!message.member.voice.channel) return message.channel.send({content: `Musisz być na kanale głosowym aby użyć tej komendy`})
-        if (!guildQueue) return message.channel.send({content:'Nie możesz wyrzucić bota jak go nie ma na kanale głosowym'})
-        guildQueue.stop();
-        message.channel.send({content: `Bot opuścił kanał`})
-    },}
-
+        guildQueue.songs.map((song, i) => {
+            if (i === 0) return message.channel.send({content: `Teraz odtwarzane: **${song.name}**`})
+            message.channel.send({content: `**${i}**. **${song.name}**`})
+        })
+    }}

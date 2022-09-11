@@ -5,7 +5,6 @@ module.exports = (client) => {
     const fs = require("fs");
     const {Collection} = require('discord.js')
     client.slashcommands = new Collection();
-    //const commandFiles = fs.readdirSync('./slashcommands').filter(file => file.endsWith('.js'));
 
     const commandFolders = fs.readdirSync('./slashcommands');
 
