@@ -18,5 +18,8 @@ module.exports = {
             //`Twórca: ${client.users.cache.get(global.owner).tag}`
         ]
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
+    },
+    embedFooter(embed, message) {
+    embed.setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL())
     }
 }

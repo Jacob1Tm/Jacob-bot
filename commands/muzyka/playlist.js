@@ -34,7 +34,7 @@ module.exports = {
         let song = await queue.playlist(link).catch(err => message.channel.send({content: 'Nie mogę znaleźć upewnij się że podałeś prawidłową link do playlisty na youtube lub spotify.'}))
         if (!queue.songs) return voice.getVoiceConnection(`${guildID}`).disconnect();
         if (song.name === undefined) return;
-        message.channel.send({content: `Dodano do kolejki całą playlistę piosenek`})
+        message.channel.send({content: `Dodano do kolejki ${guildQueue.songs.length} piosenek`})
             .catch(_ => {
                 if (!guildQueue) {
                     queue.stop();

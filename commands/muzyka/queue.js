@@ -1,6 +1,7 @@
 const voice = require('@discordjs/voice');
 const {Message, MessageEmbed} = require("discord.js");
 const userModel = require("../../modele/userSchema");
+const { embedFooter } = require("./../../funkcje.js");
 module.exports = {
     name: 'queue',
     description: 'Wyświetla kolejkę piosenek.',
@@ -25,6 +26,7 @@ module.exports = {
         const embed = new MessageEmbed;
         embed.setTitle(`Kolejka serwera ${message.guild.name}:`)
         embed.setColor("RANDOM")
+        embedFooter(embed, message);
         const guildID = message.guild.id;
         let guildQueue = client.player.getQueue(guildID)
         if (!guildQueue === undefined) return message.channel.send({content: 'Kolejka jest pusta.'});
