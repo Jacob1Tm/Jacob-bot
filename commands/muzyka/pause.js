@@ -24,6 +24,7 @@ module.exports = {
         const guildID = message.guild.id;
         let guildQueue = client.player.getQueue(guildID)
         if (!guildQueue) return message.channel.send({content:'Nie jest odtwarzana żadna piosenka'})
+        if (!message.member.voice.channel) return message.channel.send({content: `Musisz być na kanale głosowym aby użyć tej komendy`})
         guildQueue.setPaused(true);
         message.channel.send({content: `Odtwarzanie zostało wstrzymane`})
     },}

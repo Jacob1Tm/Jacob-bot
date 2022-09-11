@@ -25,6 +25,7 @@ module.exports = {
         const guildID = message.guild.id;
         let guildQueue = client.player.getQueue(guildID)
         if (!guildQueue) return message.channel.send({content:'musisz pierw dodać piosenkę do kolejki'})
+        if (!message.member.voice.channel) return message.channel.send({content: `Musisz być na kanale głosowym aby użyć tej komendy`})
         if(!args[0]) return message.channel.send({content:'Podaj argument **song, queue, off**'})
         if (args[0].toLowerCase() === "song") {
             guildQueue.setRepeatMode(RepeatMode.SONG);

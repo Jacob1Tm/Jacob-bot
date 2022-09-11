@@ -27,10 +27,14 @@ module.exports = {
         embed.setColor("RANDOM")
         const guildID = message.guild.id;
         let guildQueue = client.player.getQueue(guildID)
-        if (!guildQueue) return message.channel.send({content: 'Kolejka jest pusta.'})
-        guildQueue.songs.forEach((song, index) => {
-            if (index === 0) return embed.addField(`Teraz odtwarzane:`, `**${song.name}** - ${song.author}`);
-            embed.addField(`Piosenka ${index}`, `**${song.name}** - ${song.author}`);
-        })
+        if (!guildQueue === undefined) return message.channel.send({content: 'Kolejka jest pusta.'});
+        try {
+            guildQueue.songs.forEach((song, index) => {
+                if (index === 0) return embed.addField(`Teraz odtwarzane:`, `**${song.name}** - ${song.author}`);
+                embed.addField(`Piosenka ${index}`, `**${song.name}** - ${song.author}`);
+            })
+        } catch(e) {
+            return message.channel.send({content: 'Kolejka jest pusta.'})
+        }
         message.channel.send({embeds: [embed]})
     }}
