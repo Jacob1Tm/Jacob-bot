@@ -32,6 +32,7 @@ module.exports = {
             guildQueue.songs.forEach((song, index) => {
                 if (index === 0) return embed.addField(`Teraz odtwarzane:`, `**${song.name}** - ${song.author}`);
                 embed.addField(`Piosenka ${index}`, `**${song.name}** - ${song.author}`);
+                if (index === 24) return embed.addField(`Pozostałe piosenki:`, `**${guildQueue.songs.length - 24}**`);
             })
         } catch(e) {
             return message.channel.send({content: 'Kolejka jest pusta.'})
