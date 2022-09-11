@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 5,
     category: 'mus',
     aliases: ["kolejka"],
-    args: true,
+    args: false,
     async execute(message, args, client) {
         //tutaj kodzior od blokowania jak się nie jest dodanym do tego
         if (global.databaseonline === true) {
@@ -22,10 +22,15 @@ module.exports = {
             if (!user) return message.channel.send({embeds: [embed]})
         }
         //tu samo play
+        const embed = new MessageEmbed;
+        embed.setTitle(`Kolejka serwera ${message.guild.name}:`)
+        embed.setColor("RANDOM")
         const guildID = message.guild.id;
         let guildQueue = client.player.getQueue(guildID)
-        guildQueue.songs.map((song, i) => {
-            if (i === 0) return message.channel.send({content: `Teraz odtwarzane: **${song.name}**`})
-            message.channel.send({content: `**${i}**. **${song.name}**`})
+        if (!guildQueue) return message.channel.send({content: 'Kolejka jest pusta.'})
+        guildQueue.songs.forEach((song, index) => {
+            if (index === 0) embed.addField(`Teraz odtwarzane:`, `${song.name} - ${song.author}`)
+            embed.addField(`Piosenka ${index + 1}`, `${song.name} - ${song.author}`)
         })
+        message.channel.send({embeds: [embed]})
     }}
