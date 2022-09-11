@@ -17,19 +17,12 @@ deploycommand(client, config);
 
 client.login(token);
 
-let args = process.argv;
-console.log(args);
-
-let argsslicedby2 = args.slice(2);
-console.log(argsslicedby2);
-
 mongoose.connect(config.mongo, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-
 })
 	.then(() => {
-		console.log("Połączono z baza danych")
+		console.log("Połączono z baza danych");
 		global.databaseonline = true;
 	})
 	.catch((err) => {
