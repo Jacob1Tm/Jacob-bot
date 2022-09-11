@@ -29,8 +29,8 @@ module.exports = {
         let guildQueue = client.player.getQueue(guildID)
         if (!guildQueue) return message.channel.send({content: 'Kolejka jest pusta.'})
         guildQueue.songs.forEach((song, index) => {
-            if (index === 0) return embed.addField(`Teraz odtwarzane:`, `${song.name} - ${song.author}`);
-            embed.addField(`Piosenka ${index + 1}`, `${song.name} - ${song.author}`);
+            if (index === 0) return embed.addField(`Teraz odtwarzane:`, `**${song.name}** - ${song.author}`);
+            embed.addField(`Piosenka ${index}`, `**${song.name}** - ${song.author}`);
         })
         message.channel.send({embeds: [embed]})
     }}
