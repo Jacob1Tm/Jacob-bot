@@ -15,8 +15,6 @@ commandHandler(client, config);
 slashHandler(client, config);
 deploycommand(client, config);
 
-client.login(token);
-
 mongoose.connect(config.mongo, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -29,6 +27,8 @@ mongoose.connect(config.mongo, {
 		console.log("Nie udało się połączyć z bazą danych, wszystkie rzeczy korzystające z bazy danych nie działają lub są zmodyfikowane do działania bez.\n(ale jestem pro w opisywaniu)")
 		global.databaseonline = false;
 	});
+
+client.login(token);
 
 client.on("ready", async () => {
 	console.log(`${client.user.tag} włączony!`);
