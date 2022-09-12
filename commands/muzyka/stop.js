@@ -5,6 +5,7 @@ module.exports = {
     description: 'Wyrzuca bota z kanału głosowego.',
     cooldown: 5,
     category: 'mus',
+    aliases: ['wyjdz', 'wypierdalaj', 'won','leave'],
     userPermissions: ["MANAGE_MESSAGES"],
     async execute(message, args, client) {
         //kodzior od sprawdzania czy user może
