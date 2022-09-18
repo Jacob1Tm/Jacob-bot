@@ -3,7 +3,7 @@ module.exports = {
     name: 'kpn',
     description: 'Klasyczne Kamień Papier Nożyce.',
     category: 'fun',
-    aliases: 'kamienpapiernozyce',
+    aliases: ['kamienpapiernozyce','papienozycekamien','nozycekamienpapier','nozycepapierkamien','papierkamiennozyce'],
     execute(message, args) {
         const embed = new MessageEmbed()
             .setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL())
