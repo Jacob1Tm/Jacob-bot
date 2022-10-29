@@ -9,6 +9,7 @@ module.exports = {
 	"token": process.env.token,
 	"prefix": "J!", // prefix;
 	"clientId": "303050328918458368",
+	"guildId": "826740275460046858",
 	"mongo": process.env.mongo,
 	"version": "1.3.0",
 	"errorchannel": "906550145213145119",
