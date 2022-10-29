@@ -3,6 +3,7 @@ const {randomStatus} = require("./../../funkcje.js");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('status')
+        .setDescription('Zmienia status bota.')
         .addStringOption(option =>
             option.setName('type')
                 .setDescription('Typ statusu')

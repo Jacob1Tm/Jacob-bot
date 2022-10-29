@@ -19,7 +19,17 @@ module.exports = {
         ]
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
     },
+    //kompletnie nie funkcja zajebana z neta
+    makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    },
     embedFooter(embed, message) {
     embed.setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL())
-    }
+    },
 }

@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
-const { sendmessage, sendembed, sendtochannel } = require('../../funkcje.js')
+const { sendmessage, sendembed, sendtochannel, makeid } = require('../../funkcje.js')
+
 module.exports = {
     name: 'eval',
     aliases: ['e'],
