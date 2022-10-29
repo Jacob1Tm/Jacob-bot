@@ -73,7 +73,7 @@ module.exports = (client) => {
             let reply = `Nie podałeś żadnych argumentów`;
 
             if (command.usage) {
-                reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+                reply += `\nPoprawne użycie to: \`${prefix}${command.name} ${command.usage}\``;
             }
 
             return message.reply(reply);
