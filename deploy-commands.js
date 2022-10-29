@@ -15,7 +15,7 @@ module.exports = () => {
 
 	for (const folder of commandFolders) {
 		const commandFiles = fs.readdirSync(`./slashcommands/${folder}`).filter(file => file.endsWith('.js'));
-		if (folder == 'developer' || folder == 'indev') {
+		if (folder === 'developer' || folder === 'indev') {
 			for (const file of commandFiles) {
 				const command = require(`./slashcommands/${folder}/${file}`);
 				guildcommands.push(command.data.toJSON());
