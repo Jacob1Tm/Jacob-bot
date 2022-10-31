@@ -1,5 +1,4 @@
 const {MessageEmbed} = require("discord.js");
-const userModel = require("../../modele/userSchema");
 module.exports = {
     name: 'progress',
     description: 'Pasek postępu piosenki czy coś XD.',

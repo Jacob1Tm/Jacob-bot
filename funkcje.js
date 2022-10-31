@@ -1,3 +1,4 @@
+
 module.exports = {
     sendmessage(channel, message) {
         channel.send({content:message})
@@ -14,8 +15,6 @@ module.exports = {
             `Używany przez ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}  użytkowników`,
             `Prefiks: ${global.prefix}`,
             `Wersja: ${global.v}`,
-            //hej wyłączone bo wywala z jakiegoś powodu jak ograne lub ktoś to będzie
-            //`Twórca: ${client.users.cache.get(global.owner).tag}`
         ]
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
     },
@@ -28,6 +27,20 @@ module.exports = {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return result;
+    },
+    async musicCheck(message) {
+        let result = true;
+        if (global.databaseonline === false) return result = true;
+        if (global.databaseonline === true) {
+            const userModel = require("./modele/userSchema");
+            const guildModel = require("./modele/guildSchema");
+            let id = message.author.id
+            let user = await userModel.findOne({userID: `${id}`})
+            let guild = await guildModel.findOne({guildID: `${message.guild.id}`})
+            if (!user && !guild) return result = false;
+            else if (user) return result = true;
+            else if (guild) return result = true;
+        }
     },
     embedFooter(embed, message) {
     embed.setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL())

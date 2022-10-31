@@ -1,31 +1,46 @@
-const model = require('..//../modele//userSchema');
 const userModel = require("../../modele/userSchema");
+const guildModel = require("../../modele/guildSchema");
 const {MessageEmbed} = require("discord.js")
+
+async function userGive(message, args, id) {
+    let exuser = await userModel.findOne({userID: id})
+    if (exuser) return message.channel.send("ten użytkownik już ma dostęp do modułu muzycznego");
+    let user = await userModel.create({
+        userID: args[0]
+    })
+    user.save()
+}
+async function guildGive(message, args, id) {
+    let exguild = await guildModel.findOne({guildID: id})
+    if (exguild) return message.channel.send("ten serwer już ma dostęp do modułu muzycznego");
+    let guild = await guildModel.create({
+        guildID: args[0]
+    })
+    guild.save()
+}
+
 module.exports = {
     name: 'givemusic',
     description: 'Daje dostęp do muzyki czy coś',
     category: 'developer',
     ownerOnly: true,
-    async execute(message, args) {
+    async execute(message, args, client) {
         if(!message.mentions.users.first() && args[0]) {
-            let exuser = await userModel.findOne({userID: args[0]})
-            if (exuser) return message.channel.send("ten użytkownik już ma dostęp do modułu muzycznego");
-            let user = await model.create({
-                userID: args[0]
+            let id = args[0]
+            client.users.fetch(id).then(user => {
+                userGive(message, args, id)
+                message.channel.send(`Nadano dostęp do modułu muzycznego dla id ${args[0]}`)
+            }).catch(err => {
+                if (id.length !== 18) return message.channel.send("nieprawidłowe id");
+                else guildGive(message, args, id);
+                message.channel.send(`Nadano dostęp do modułu muzycznego dla serwera ${id}`)
             })
-            user.save()
-            message.channel.send(`Nadano dostęp do modułu muzycznego dla id ${args[0]}`)
         }else if (message.mentions.users.first()) {
             const id = message.mentions.users.first().id
-            let exuser = await userModel.findOne({userID: id})
-            if (exuser) return message.channel.send("ten użytkownik już ma dostęp do modułu muzycznego");
-            let user = await model.create({
-                userID: id
-            })
-            user.save()
+            userGive(message, args, id)
             message.channel.send(`Nadano dostęp do modułu muzycznego dla id ${id}`)
         }else{
-            message.channel.send("Nie oznaczyłeś osoby lub nie podałeś id.")
+            message.channel.send("Nie oznaczyłeś użytkownika lub nie podałeś id użytkownika/serwera.")
         }
     },
 };

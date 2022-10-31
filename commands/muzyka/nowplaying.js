@@ -1,9 +1,7 @@
 const {MessageEmbed} = require("discord.js");
-const userModel = require("../../modele/userSchema");
 module.exports = {
     name: 'nowplaying',
     description: 'Wyświetla aktualnie odtwarzaną piosenkę.',
-    cooldown: 5,
     category: 'mus',
     aliases: ['teraz','now'],
     async execute(message, args, client) {

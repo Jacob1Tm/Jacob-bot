@@ -4,6 +4,7 @@ module.exports = (client) => {
     const {prefix} = require('./config.js');
     const config = require('./config.js')
     const ascii = require("ascii-table");
+    const { musicCheck } = require('./funkcje.js')
     global.owner = config.ownerID
     global.prefix = config.prefix
 
@@ -84,8 +85,6 @@ module.exports = (client) => {
             if (message.content.includes(" -w") && message.author.id === global.owner && !message.member.permissionsIn(message.channel).has(command.userPermissions)) {
                 message.channel.send(`Użycie Komendy zostanie wymuszone a informacja zostanie wysłana na kanał <#${config.abusechannel}>`)
                 client.channels.cache.get(config.abusechannel).send(`użytkownik \`${message.author.username}\` (${message.author.id}) wymusił użycie komendy \`${command.name}\` na serwerze \`${message.guild.name}\` (${message.guild.id})`)
-            } else if (message.author.id === global.owner && message.member.permissionsIn(message.channel).has(command.userPermissions)) {
-            return;
             } else if (!message.member.permissionsIn(message.channel).has(command.userPermissions)) {
                 embed.setColor("#ff0000")
                 embed.setDescription(':x: Nie masz permisji do wykonania tej komendy.')
@@ -149,12 +148,22 @@ module.exports = (client) => {
 
         try {
             if (message.guild.me.isCommunicationDisabled() === true) return;
-            command.execute(message, args, client);
+            if (command.category === "mus") {
+                musicCheck(message).then((result) => {
+                    const {MessageEmbed} = require("discord.js");
+                    const embed = new MessageEmbed()
+                    embed.setColor("#ff0000")
+                    embed.setDescription(':x: Ta komenda jest tylko dla osób z nadanym dostępem do muzyki.')
+                    embed.setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL());
+                    if (result === true) command.execute(message, args, client);
+                    if (result === false) message.channel.send({embeds: [embed]});
+                })
+            }
+            else command.execute(message, args, client);
         } catch (error) {
-            if (command.name === "kalkulator") return message.channel.send("Nieprawidłowe Działanie")
             console.error(error);
-            const {makeid} = require("./funkcje.js");
-            const errorid = makeid(10);
+            let {makeid} = require("./funkcje.js");
+            let errorid = makeid(10);
             message.channel.send({content: `Wystąpił błąd, kod błędu: \`${errorid}\``});
             client.channels.cache.get(config.errorchannel).send({content: `Wystąpił błąd podczas używania komendy \`${command.name}\`, użył jej użytkownik o ID ${message.author.id} (${message.author.tag}).\nNumer błędu: ${errorid}\nTreść błędu:\n\`\`\`${error}\`\`\``});
             console.log("Kod Błędu: " + errorid);
