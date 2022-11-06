@@ -8,6 +8,7 @@ module.exports = {
         //reszta od komendy
         const guildID = message.guild.id;
         let queue = client.player.createQueue(guildID);
+        queue.textChannel = message.channel;
         let guildQueue = client.player.getQueue(guildID)
         const vc = message.member.voice.channel;
         if (vc) message.channel.send({content: `Bot teraz będzie dodawał piosenki do kolejki, może to trochę potrwać w zależności od ilości piosenek.`});
@@ -17,14 +18,8 @@ module.exports = {
         } catch(e) {
             return message.channel.send("Nie mogę dołączyć na twój kanał głosowy upewnij się że bot ma uprawnienia aby dołączyć na twój kanał głosowy.");
         }
-        let song = await queue.playlist(link).catch(err => message.channel.send({content: 'Nie mogę znaleźć upewnij się że podałeś prawidłową link do playlisty na youtube lub spotify.'}))
-        if (!queue.songs) return voice.getVoiceConnection(`${guildID}`).disconnect();
-        if (song.name === undefined) return;
-        message.channel.send({content: `Dodano do kolejki ${guildQueue.songs.length} piosenek`})
-            .catch(_ => {
-                if (!guildQueue) {
-                    queue.stop();
-                }
-            });
+        let song = await queue.playlist(link).catch(err => {
+            message.channel.send({content: 'Nie mogę znaleźć upewnij się że podałeś prawidłową link do playlisty na youtube lub spotify.'})
+        })
     },}
 
