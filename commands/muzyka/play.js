@@ -16,8 +16,7 @@ module.exports = {
         try {
             await queue.join(vc)
         } catch(e) {
-            message.channel.send("Nie mogę dołączyć na twój kanał głosowy upewnij się że bot ma uprawnienia aby dołączyć na twój kanał głosowy.");
-            return voice.getVoiceConnection(`${guildID}`).disconnect();
+            return message.channel.send("Nie mogę dołączyć na twój kanał głosowy upewnij się że bot ma uprawnienia aby dołączyć na twój kanał głosowy.");
         }
         let song = await queue.play(args.join(' ')).catch(err => {
             message.channel.send({content: 'Nie mogę znaleźć upewnij się że podałeś prawidłową nazwę lub link.'});
