@@ -11,10 +11,6 @@ module.exports = (client) => {
     client.commands = new Discord.Collection();
     client.cooldowns = new Discord.Collection();
 
-    const {Player} = require("discord-music-player");
-    client.player = new Player(client, {leaveOnEmpty: true});
-
-
     const commandFolders = fs.readdirSync('./commands');
 
     for (const folder of commandFolders) {
