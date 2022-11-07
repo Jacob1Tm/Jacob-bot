@@ -1,6 +1,7 @@
 const commandHandler = require("./command-handler");
 const slashHandler = require("./slash-handler");
 const deploycommand = require("./deploy-commands");
+const eventHandler = require("./event-handler")
 const { Client, Intents } = require('discord.js');
 const { token } = require('./config.js');
 const config = require('./config.js')
@@ -16,6 +17,7 @@ client.player = new Player(client, {deafenOnJoin: true, timeout: 32000});
 commandHandler(client, config);
 slashHandler(client, config);
 deploycommand(client, config);
+eventHandler(client)
 
 mongoose.connect(config.mongo, {
 	useNewUrlParser: true,
