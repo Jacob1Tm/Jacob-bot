@@ -11,10 +11,10 @@ module.exports = () => {
 	const commands = [];
 	const guildcommands = [];
 
-	const commandFolders = fs.readdirSync('./slashcommands');
+	const commandFolders = fs.readdirSync('./src/slashcommands');
 
 	for (const folder of commandFolders) {
-		const commandFiles = fs.readdirSync(`./slashcommands/${folder}`).filter(file => file.endsWith('.js'));
+		const commandFiles = fs.readdirSync(`./src/slashcommands/${folder}`).filter(file => file.endsWith('.js'));
 		if (folder === 'developer' || folder === 'indev') {
 			for (const file of commandFiles) {
 				const command = require(`./slashcommands/${folder}/${file}`);

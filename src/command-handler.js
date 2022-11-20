@@ -11,10 +11,10 @@ module.exports = (client) => {
     client.commands = new Discord.Collection();
     client.cooldowns = new Discord.Collection();
 
-    const commandFolders = fs.readdirSync('./commands');
+    const commandFolders = fs.readdirSync('./src/commands');
 
     for (const folder of commandFolders) {
-        const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+        const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith('.js'));
         for (const file of commandFiles) {
             const command = require(`./commands/${folder}/${file}`);
             client.commands.set(command.name, command);
@@ -24,7 +24,7 @@ module.exports = (client) => {
     client.on("ready", async () => {
         const table = new ascii().setHeading("Komenda", "Folder", "Status").setBorder("│", "─");
         for (const folder of commandFolders) {
-            const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith(".js"));
+            const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith(".js"));
 
             for (const file of commandFiles) {
                 const commandName = require(`./commands/${folder}/${file}`);

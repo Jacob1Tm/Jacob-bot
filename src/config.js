@@ -1,5 +1,5 @@
 const dotenv = require("dotenv").config();
-const version = require("./package.json").version;
+const version = require("../package.json").version;
 //Jakby ktos chcial losowy prefix czy cos
 //const {makeid} = require("./funkcje.js");
 //const prefix = makeid(2);

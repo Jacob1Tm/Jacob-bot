@@ -1,5 +1,5 @@
 const voice = require('@discordjs/voice');
-const { embedFooter } = require("./../../funkcje.js");
+const { embedFooter } = require("../../funkcje.js");
 module.exports = {
     name: 'queue',
     description: 'Wyświetla kolejkę piosenek.',
