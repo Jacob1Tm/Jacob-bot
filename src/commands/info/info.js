@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const prettyMilliseconds = require("pretty-ms");
-const paczka = require("../../package.json");
+const paczka = require("../../../package.json");
 const djs = paczka.dependencies["discord.js"];
 module.exports = {
     name: "info",

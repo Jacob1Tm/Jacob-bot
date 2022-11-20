@@ -5,7 +5,7 @@
   "engines": {
     "node": ">=16.x"
   },
-  "main": "index.js",
+  "main": "src/index.js",
   "dependencies": {
     "@discordjs/builders": "^1.2.0",
     "@discordjs/opus": "^0.8.0",
@@ -112,7 +112,7 @@
     "ytsr": "^3.5.3"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",

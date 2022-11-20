@@ -1,4 +1,4 @@
-const {randomStatus} = require("./../../funkcje.js");
+const {randomStatus} = require("../../funkcje.js");
 module.exports = {
     name: 'status',
     aliases: ['s'],

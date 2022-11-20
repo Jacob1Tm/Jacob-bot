@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const {randomStatus} = require("./../../funkcje.js");
+const {randomStatus} = require("../../funkcje.js");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('status')

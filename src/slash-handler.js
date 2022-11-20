@@ -6,10 +6,10 @@ module.exports = (client) => {
     const {Collection} = require('discord.js')
     client.slashcommands = new Collection();
 
-    const commandFolders = fs.readdirSync('./slashcommands');
+    const commandFolders = fs.readdirSync('./src/slashcommands');
 
     for (const folder of commandFolders) {
-        const commandFiles = fs.readdirSync(`./slashcommands/${folder}`).filter(file => file.endsWith('.js'));
+        const commandFiles = fs.readdirSync(`./src/slashcommands/${folder}`).filter(file => file.endsWith('.js'));
         for (const file of commandFiles) {
             const command = require(`./slashcommands/${folder}/${file}`);
             client.slashcommands.set(command.data.name, command)
