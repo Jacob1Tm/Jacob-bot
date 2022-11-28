@@ -1,11 +1,12 @@
 const voice = require('@discordjs/voice');
 const { embedFooter } = require("../../funkcje.js");
+const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: 'queue',
     description: 'Wyświetla kolejkę piosenek.',
     cooldown: 5,
     category: 'mus',
-    aliases: ["kolejka"],
+    aliases: ["kolejka",'q'],
     args: false,
     async execute(message, args, client) {
         //tu samo play
