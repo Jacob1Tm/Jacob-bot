@@ -6,7 +6,6 @@ module.exports = (client) => {
 
     for (const folders of eventDirectories) {
         const eventFiles = fs.readdirSync(`./src/events/${folders}`).filter(file => file.endsWith('.js'));
-        console.log(eventFiles);
         if (folders === 'music') {
             for (const file of eventFiles) {
                 const event = require(`./events/${folders}/${file}`);
