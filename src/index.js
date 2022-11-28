@@ -13,7 +13,7 @@ global.v = config.version
 global.customstatus = false;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 const {Player} = require("discord-music-player");
-client.player = new Player(client, {deafenOnJoin: true, timeout: 32000});
+client.player = new Player(client, {deafenOnJoin: true, timeout: 30000});
 commandHandler(client, config);
 slashHandler(client, config);
 deploycommand(client, config);

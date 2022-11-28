@@ -3,7 +3,7 @@ module.exports = {
     description: 'Wyrzuca bota z kanału głosowego.',
     cooldown: 5,
     category: 'mus',
-    aliases: ['wyjdz', 'wypierdalaj', 'won','leave'],
+    aliases: ['wyjdz', 'wypierdalaj', 'won','leave','disconnect','syberia','naura'],
     userPermissions: ["MANAGE_MESSAGES"],
     async execute(message, args, client) {
         //reszta od komendy
@@ -12,6 +12,7 @@ module.exports = {
         if (!message.member.voice.channel) return message.channel.send({content: `Musisz być na kanale głosowym aby użyć tej komendy`})
         if (!guildQueue) return message.channel.send({content:'Nie możesz wyrzucić bota jak go nie ma na kanale głosowym'})
         guildQueue.stop();
+        guildQueue.leave();
         message.channel.send({content: `Bot opuścił kanał`})
     },}
 
