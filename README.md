@@ -1,7 +1,7 @@
 ### Wymagania
 [Node 16](https://nodejs.org/en/ "Node 16")\
 NPM (jest on wbudowany w node)\
-[MongoDB](https://www.mongodb.com "MongoDB") (opcjonalne)\
+[MongoDB](https://www.mongodb.com "MongoDB") (opcjonalne)
 
 ### Uruchamianie
 Pobieramy repo (możesz użyć do tego [gita](https://git-scm.com/downloads), pobrać poprzez opcję `Code` -> `Download ZIP`, lub pobrać z zakładki Releases*).
