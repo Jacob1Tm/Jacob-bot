@@ -9,8 +9,6 @@ module.exports = {
     args: true,
     execute(message, args) {
         const tekst = args.join(' ');
-        if (tekst.includes('shut','test')) return message.channel.send("HALO CO TO ZA DZIWNE RZECZY :<<<");
-        const { exec } = require("child_process");
         const embed = new MessageEmbed()
 
         exec(`${tekst}`, (error, stdout, stderr) => {
