@@ -1,12 +1,14 @@
+const {guildPrefixCheck} = require("./funkcje");
+const Prefix = require("./modele/guildPrefixSchema");
+const config = require("./config");
 module.exports = (client) => {
     const fs = require('fs');
     const Discord = require('discord.js');
-    const {prefix} = require('./config.js');
     const config = require('./config.js')
     const ascii = require("ascii-table");
     const { musicCheck } = require('./funkcje.js')
+    const guildPrefixModel = require('./modele/guildPrefixSchema');
     global.owner = config.ownerID
-    global.prefix = config.prefix
 
     client.commands = new Discord.Collection();
     client.cooldowns = new Discord.Collection();
@@ -38,10 +40,21 @@ module.exports = (client) => {
 
     //handler
     client.on('messageCreate', message => {
-        if (message.channel.id === "961979130679812133") {
-            if (message.content.toLowerCase() !== `${prefix.toLowerCase()}weryfikacja` && !message.author.bot) return message.delete();
-        }
-
+        let prefix;
+            Prefix.findOne({ serverID: message.guild.id }, (err, prefixDoc) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                if (prefixDoc && prefixDoc.prefix) {
+                    prefix = prefixDoc.prefix;
+                    console.log(prefix)
+                } else {
+                    prefix = config.prefix;
+                    console.log(prefix)
+                }
+            });
+        return console.log(prefix);
         if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -96,26 +109,26 @@ module.exports = (client) => {
             }
         }
 
-        if(message.content.toLowerCase().includes(" -h")) {
+        if (message.content.toLowerCase().includes(" -h")) {
             if (!command.description) return message.channel.send("Ta komenda nie ma jeszcze helpa/opisu");
             embed.setTitle(`Help komendy ${command.name} (BETA)`)
-            embed.addField("**Opis:**",`${command.description}`)
-            if (!command.usage) embed.addField(`**Użycie:**`,prefix+command.name)
+            embed.addField("**Opis:**", `${command.description}`)
+            if (!command.usage) embed.addField(`**Użycie:**`, prefix + command.name)
 
             if (command.usage) {
                 const uzycie = `${prefix}${command.name} ${command.usage}`
-                embed.addField(`**Użycie:**`,uzycie)
+                embed.addField(`**Użycie:**`, uzycie)
             }
-            if (command.aliases){
+            if (command.aliases) {
                 const aliasy = command.aliases.join(", ");
-                embed.addField("**Aliasy:**",aliasy)
+                embed.addField("**Aliasy:**", aliasy)
             }
-            if (command.userPermissions){
+            if (command.userPermissions) {
                 const permisje = command.userPermissions = command.userPermissions.join(", ")
-                embed.addField("**Wymagane Permisje:**",permisje)
+                embed.addField("**Wymagane Permisje:**", permisje)
             }
             embed.setColor("YELLOW")
-            return message.channel.send({embeds:[embed]});
+            return message.channel.send({embeds: [embed]});
         }
 
         if (message.author.id !== global.owner) {
@@ -154,8 +167,7 @@ module.exports = (client) => {
                     if (result === true) command.execute(message, args, client);
                     if (result === false) message.channel.send({embeds: [embed]});
                 })
-            }
-            else command.execute(message, args, client);
+            } else command.execute(message, args, client);
         } catch (error) {
             console.error(error);
             let {makeid} = require("./funkcje.js");
@@ -169,6 +181,5 @@ module.exports = (client) => {
         if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`){
             if (message.guild.me.isCommunicationDisabled() === true) return;
             message.channel.send({ content: `Hej! Mój prefix to ${prefix}`})
-        }
-    })
-}
+        }})
+    }
