@@ -1,6 +1,6 @@
 {
   "name": "jacob-bot",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "",
   "engines": {
     "node": ">=16.x"
