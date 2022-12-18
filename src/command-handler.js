@@ -1,12 +1,11 @@
-const {guildPrefixCheck} = require("./funkcje");
-const Prefix = require("./modele/guildPrefixSchema");
 const config = require("./config");
+const guildPrefixModel = require("./modele/guildPrefixSchema");
 module.exports = (client) => {
     const fs = require('fs');
     const Discord = require('discord.js');
     const config = require('./config.js')
     const ascii = require("ascii-table");
-    const { musicCheck } = require('./funkcje.js')
+    const { musicCheck, guildPrefixGet } = require('./funkcje.js')
     const guildPrefixModel = require('./modele/guildPrefixSchema');
     global.owner = config.ownerID
 
@@ -39,22 +38,14 @@ module.exports = (client) => {
     })
 
     //handler
-    client.on('messageCreate', message => {
+    client.on('messageCreate', async message => {
         let prefix;
-            Prefix.findOne({ serverID: message.guild.id }, (err, prefixDoc) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                if (prefixDoc && prefixDoc.prefix) {
-                    prefix = prefixDoc.prefix;
-                    console.log(prefix)
-                } else {
-                    prefix = config.prefix;
-                    console.log(prefix)
-                }
-            });
-        return console.log(prefix);
+        if (global.databaseonline == true) {
+            let result = await guildPrefixModel.findOne({guildID: message.guild.id});
+            if (result === null) prefix = global.gprefix;
+            else prefix = result.prefix;
+        }
+        else prefix = global.gprefix;
         if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -177,8 +168,15 @@ module.exports = (client) => {
             console.log("Kod Błędu: " + errorid);
         }
     });
-    client.on('messageCreate', message => {
+    client.on('messageCreate', async message => {
         if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`){
+            let prefix;
+            if (global.databaseonline == true) {
+                let result = await guildPrefixModel.findOne({guildID: message.guild.id});
+                if (result === null) prefix = global.gprefix;
+                else prefix = result.prefix;
+            }
+            else prefix = global.gprefix;
             if (message.guild.me.isCommunicationDisabled() === true) return;
             message.channel.send({ content: `Hej! Mój prefix to ${prefix}`})
         }})
