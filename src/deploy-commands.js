@@ -1,6 +1,3 @@
-const fs = require("fs");
-const {Routes} = require("discord-api-types/v9");
-const config = require("./config");
 module.exports = () => {
 	const {REST} = require('@discordjs/rest');
 	const {Routes} = require('discord-api-types/v9');
@@ -10,7 +7,7 @@ module.exports = () => {
 
 	const commands = [];
 	const guildcommands = [];
-
+	//Szukamy slash komend
 	const commandFolders = fs.readdirSync('./src/slashcommands');
 
 	for (const folder of commandFolders) {
@@ -26,7 +23,7 @@ module.exports = () => {
 			commands.push(command.data.toJSON());
 		}}
 	}
-
+	//Rejestrujemy komendy
 	const rest = new REST({version: '9'}).setToken(token);
 
 	(async () => {
@@ -47,5 +44,5 @@ module.exports = () => {
 			console.log('Pomyślnie Odświeżono slash komendy serwerowe!');
 		} catch (error) {
 			console.error(error);
-		};
+		}
 	})()};

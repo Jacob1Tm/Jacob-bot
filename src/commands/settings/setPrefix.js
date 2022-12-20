@@ -1,11 +1,12 @@
 const guildPrefixModel = require('../../modele/guildPrefixSchema');
 module.exports = {
-    name: 'setprefix',
+    name: 'prefix',
     description: 'Ustawia prefix dla serwera',
-    category: 'developer',
-    ownerOnly: true,
+    category: 'settings',
+    aliases: ['sp','setprefix','ustawprefix'],
+    usage: '<prefix>',
+    args: true,
     async execute(message, args, client) {
-        if (!args[0]) return message.channel.send("Nie podałeś prefixu");
         const guildPrefixModel = require("../../modele/guildPrefixSchema");
         let exguild = await guildPrefixModel.findOne({guildID: message.guild.id})
         if (exguild) {

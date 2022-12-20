@@ -5,7 +5,6 @@ module.exports = {
   category: 'moderacja',
     userPermissions: ["MANAGE_MESSAGES"],
     botPermissions: ["MANAGE_MESSAGES"],
-    guildOnly: true,
 	execute(message, args) {
         const liczba = args[0]
 		const embed = new Discord.MessageEmbed()

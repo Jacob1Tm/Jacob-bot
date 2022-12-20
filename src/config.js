@@ -13,5 +13,6 @@ module.exports = {
 	"mongo": process.env.mongo,
 	"version": version,
 	"errorchannel": "906550145213145119",
-	"abusechannel": "965602437618626582"
+	"abusechannel": "965602437618626582",
+	"everyoneCanUseMusic": false,
 	}

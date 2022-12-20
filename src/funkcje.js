@@ -1,11 +1,5 @@
 
 module.exports = {
-    sendmessage(channel, message) {
-        channel.send({content:message})
-    },
-    sendembed(channel) {
-        channel.send({embeds: ['embed']})
-    },
     sendtochannel(client, channel, message) {
         client.channels.cache.get(`${channel}`).send({content:message})
     },
@@ -19,7 +13,7 @@ module.exports = {
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
     },
     //kompletnie nie funkcja zajebana z neta
-    makeid(length) {
+    makeID(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         var charactersLength = characters.length;
