@@ -153,8 +153,10 @@ module.exports = (client) => {
         }
         //i tu wykonujemy komendę
         try {
-             command.execute(message, args, client);
+            command.execute(message, args, client);
+            message.react('✅');
         } catch (error) {
+            message.react('❌');
             console.error(error);
             let {makeID} = require("./funkcje.js");
             let errorid = makeID(10);
