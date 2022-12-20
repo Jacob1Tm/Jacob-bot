@@ -6,7 +6,6 @@ const { Client, Intents } = require('discord.js');
 const { token } = require('./config.js');
 const config = require('./config.js')
 const mongoose = require("mongoose")
-const {randomStatus} = require("./funkcje.js")
 global.owner = config.ownerID
 global.gprefix = config.prefix
 global.v = config.version
@@ -19,6 +18,7 @@ slashHandler(client, config);
 deploycommand(client, config);
 eventHandler(client)
 
+//łączymy się z bazą danych
 mongoose.connect(config.mongo, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -32,12 +32,5 @@ mongoose.connect(config.mongo, {
 		global.databaseonline = false;
 	});
 
+//logujemy na konto bota xD
 client.login(token);
-
-client.on("ready", async () => {
-	console.log(`${client.user.tag} włączony!`);
-	client.user.setActivity(`Dzień dobry! | Wersja ${global.v}`, { type: "PLAYING" });
-		setInterval(() => {
-			if (global.customstatus === false) {
-				randomStatus(client);
-			}}, 600000)});

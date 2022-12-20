@@ -4,6 +4,8 @@ module.exports = {
     description: 'Wstrzymuje odtwarzanie piosenki.',
     cooldown: 5,
     category: 'mus',
+    usage: '<link do playlisty>',
+    musicAccessOnly: true,
     async execute(message, args, client) {
         //reszta od komendy
         const guildID = message.guild.id;

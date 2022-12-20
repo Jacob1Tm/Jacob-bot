@@ -3,6 +3,7 @@ module.exports = {
     description: 'Pomija aktualną piosenkę.',
     cooldown: 5,
     category: 'mus',
+    musicAccessOnly: true,
     aliases: ['wypierdalajztym','pomin'],
     userPermissions: ["MANAGE_MESSAGES"],
     async execute(message, args, client) {

@@ -4,6 +4,8 @@ module.exports = {
     description: 'Odtwarza dzwięk z linku lub wyszukuje frazę na youtube.',
     category: 'mus',
     aliases: ["p"],
+    usage: '<link/fraza>',
+    musicAccessOnly: true,
     args: true,
     async execute(message, args, client) {
         //tu samo play

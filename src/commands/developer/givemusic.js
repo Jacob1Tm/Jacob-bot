@@ -9,6 +9,7 @@ async function userGive(message, args, id) {
         userID: args[0]
     })
     user.save()
+    message.channel.send(`Nadano dostęp do modułu muzycznego dla id ${id}`)
 }
 async function guildGive(message, args, id) {
     let exguild = await guildModel.findOne({guildID: id})
@@ -17,6 +18,7 @@ async function guildGive(message, args, id) {
         guildID: args[0]
     })
     guild.save()
+    message.channel.send(`Nadano dostęp do modułu muzycznego dla serwera ${id}`)
 }
 
 module.exports = {
@@ -24,21 +26,18 @@ module.exports = {
     description: 'Daje dostęp do muzyki czy coś',
     category: 'developer',
     ownerOnly: true,
-    async execute(message, args, client) {
+    execute(message, args, client) {
         if(!message.mentions.users.first() && args[0]) {
             let id = args[0]
             client.users.fetch(id).then(user => {
                 userGive(message, args, id)
-                message.channel.send(`Nadano dostęp do modułu muzycznego dla id ${args[0]}`)
             }).catch(err => {
                 if (id.length !== 18) return message.channel.send("nieprawidłowe id");
                 else guildGive(message, args, id);
-                message.channel.send(`Nadano dostęp do modułu muzycznego dla serwera ${id}`)
             })
         }else if (message.mentions.users.first()) {
             const id = message.mentions.users.first().id
             userGive(message, args, id)
-            message.channel.send(`Nadano dostęp do modułu muzycznego dla id ${id}`)
         }else{
             message.channel.send("Nie oznaczyłeś użytkownika lub nie podałeś id użytkownika/serwera.")
         }

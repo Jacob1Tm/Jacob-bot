@@ -3,6 +3,7 @@ module.exports = {
     description: 'Wyrzuca bota z kanału głosowego.',
     cooldown: 5,
     category: 'mus',
+    musicAccessOnly: true,
     aliases: ['wyjdz', 'wypierdalaj', 'won','leave','disconnect','syberia','naura'],
     userPermissions: ["MANAGE_MESSAGES"],
     async execute(message, args, client) {

@@ -4,6 +4,7 @@ module.exports = {
     description: 'Ustawia zapętlanie piosenki/kolejki.',
     aliases: ['zapętlanie', 'zapętl'],
     category: 'mus',
+    musicAccessOnly: true,
     userPermissions: ["MANAGE_MESSAGES"],
     async execute(message, args, client) {
         //reszta od komendy

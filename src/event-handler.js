@@ -2,10 +2,12 @@ const fs = require('fs');
 
 module.exports = (client) => {
 
+    //szukamy eventy
     const eventDirectories = fs.readdirSync('./src/events');
 
     for (const folders of eventDirectories) {
         const eventFiles = fs.readdirSync(`./src/events/${folders}`).filter(file => file.endsWith('.js'));
+        //no i tu wykonujemy
         if (folders === 'music') {
             for (const file of eventFiles) {
                 const event = require(`./events/${folders}/${file}`);
@@ -17,7 +19,7 @@ module.exports = (client) => {
             }
         } else {
             for (const file of eventFiles) {
-                const event = require(`./src/events/${folders}/${file}`);
+                const event = require(`./events/${folders}/${file}`);
                 if (event.once) {
                     client.once(event.name, (...args) => event.execute(...args, client));
                 } else {

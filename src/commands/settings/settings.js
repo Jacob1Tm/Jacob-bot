@@ -1,4 +1,6 @@
-const {MessageActionRow, MessageButton, MessageEmbed} = require("discord.js");
+const guildModel = require("../../modele/guildDjRoleSchema");
+const {MessageEmbed, MessageActionRow, MessageButton} = require("discord.js");
+const guildPrefixModel = require("../../modele/guildPrefixSchema");
 module.exports = {
     name: 'settings',
     aliases: ['ustawienia'],
@@ -29,6 +31,7 @@ module.exports = {
                 components: [row],
                 allowedMentions: {repliedUser: false}
             })
+            settingsMenu(reply, message, client)
         } else {
             let row = new MessageActionRow()
                 .addComponents(
@@ -42,12 +45,17 @@ module.exports = {
                         .setStyle('PRIMARY'),
                 );
             const reply = await message.channel.send({embeds: [embed], components: [row]})
+            settingsMenu(reply, message, client)
+        }
+        function settingsMenu(reply, message, client) {
             const replyId = reply.id;
             let timeout = setTimeout(() => {
                 reply.edit({content: "Czas na reakcję minął", components: [], embeds: []})
             }, 600000)
             client.on("interactionCreate", async interaction => {
                 if (!interaction.isButton()) return;
+                if (interaction.message.id !== replyId) return;
+                if (interaction.user.id !== message.author.id) return interaction.reply({content: "Nie możesz używać tego guzika", ephemeral: true})
                 interaction.deferUpdate();
                 switch (interaction.customId) {
                     case "1" : {
@@ -81,6 +89,10 @@ module.exports = {
                                 new MessageButton()
                                     .setCustomId('4')
                                     .setLabel('Prefix')
+                                    .setStyle('PRIMARY'),
+                                new MessageButton()
+                                    .setCustomId('5')
+                                    .setLabel('DJ Role')
                                     .setStyle('PRIMARY'),
                                 new MessageButton()
                                     .setCustomId('2137')
@@ -134,6 +146,30 @@ module.exports = {
                                 }
                             }
                         )
+                        break;
+                    }
+                    case "5": {
+                        message.channel.send("Oznacz rolę którą chcesz ustawić jako rolę dj.")
+                        client.on("messageCreate", async newmessage => {
+                            if (newmessage.author.bot) return;
+                            if (newmessage.channel.id === interaction.channel.id) {
+                                if (!newmessage.author.id === message.author.id) return;
+                                const guildPrefixModel = require("../../modele/guildPrefixSchema");
+                                let exguild = await guildPrefixModel.findOne({guildID: message.guild.id});
+                                if (exguild) {
+                                    exguild.djRole = newmessage.mentions.role.first();
+                                    exguild.save();
+                                } else {
+                                    let guild = await guildModel.create({
+                                        guildID: newmessage.guild.id,
+                                        djRoleID: newmessage.mentions.roles.first(),
+                                    })
+                                    guild.save();
+                                }
+                                clearTimeout(timeout);
+                                message.channel.send({content: `Ustawiono rolę dj na ${newmessage.mentions.roles.first()}`})
+                            }
+                        })
                         break;
                     }
                     case "2137": {
