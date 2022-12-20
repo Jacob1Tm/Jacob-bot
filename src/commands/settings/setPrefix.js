@@ -5,6 +5,7 @@ module.exports = {
     category: 'settings',
     aliases: ['sp','setprefix','ustawprefix'],
     usage: '<prefix>',
+    user_permissions: ['MANAGE_GUILD'],
     args: true,
     async execute(message, args, client) {
         const guildPrefixModel = require("../../modele/guildPrefixSchema");

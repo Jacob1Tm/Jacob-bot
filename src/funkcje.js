@@ -1,3 +1,5 @@
+const userModel = require("./modele/userSchema");
+const guildModel = require("./modele/guildSchema");
 
 module.exports = {
     sendtochannel(client, channel, message) {
@@ -38,5 +40,17 @@ module.exports = {
     },
     embedFooter(embed, message) {
     embed.setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL())
+    },
+    async djCheck(message) {
+        let result = true;
+        if (global.databaseonline === false) return result = false;
+        if (global.databaseonline === true) {
+            const djModel = require("./modele/guildDjRoleSchema");
+            let server = await djModel.findOne({guildID: `${message.guild.id}`})
+            if (!server) return result = false;
+            let djRole = server.djRoleID
+            if (message.member.roles.cache.has(djRole)) return result = true;
+            else return result = false;
+        }
     },
 }

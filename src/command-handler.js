@@ -2,7 +2,7 @@ module.exports = (client) => {
     const fs = require('fs');
     const Discord = require('discord.js');
     const config = require('./config.js')
-    const { musicCheck } = require('./funkcje.js')
+    const { musicCheck, djCheck } = require('./funkcje.js')
     const guildPrefixModel = require('./modele/guildPrefixSchema');
     global.owner = config.ownerID
 
@@ -72,8 +72,9 @@ module.exports = (client) => {
 
         //sprawdzanie czy user ma permisje do użycia komendy
         if (command.userPermissions && command.userPermissions.length) {
-            if (message.content.includes(" -w") && message.author.id === global.owner && !message.member.permissionsIn(message.channel).has(command.userPermissions)) {
-                message.channel.send(`Użycie Komendy zostanie wymuszone a informacja zostanie wysłana na kanał <#${config.abusechannel}>`)
+            if (command.category === 'mus') {
+                if (!djCheck(message)) return;
+            } else if (message.content.includes(" -w") && message.author.id === global.owner && !message.member.permissionsIn(message.channel).has(command.userPermissions) && command.category !== 'moderacja') {
                 client.channels.cache.get(config.abusechannel).send(`użytkownik \`${message.author.username}\` (${message.author.id}) wymusił użycie komendy \`${command.name}\` na serwerze \`${message.guild.name}\` (${message.guild.id})`)
             } else if (!message.member.permissionsIn(message.channel).has(command.userPermissions)) {
                 embed.setColor("#ff0000")
