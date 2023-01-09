@@ -101,7 +101,8 @@ module.exports = {
                                 if (!newmessage.author.id === message.author.id) return;
                                 clearTimeout(timeout);
                                 reply.delete();
-                                message.channel.send("W.I.P")
+                                if (newmessage.author.id === message.author.id) return;
+                                return message.channel.send("W.I.P");
                             }
                         })
                         break;
