@@ -1,17 +1,15 @@
-const config = require("./config");
-const guildPrefixModel = require("./modele/guildPrefixSchema");
 module.exports = (client) => {
     const fs = require('fs');
     const Discord = require('discord.js');
     const config = require('./config.js')
-    const ascii = require("ascii-table");
-    const { musicCheck, guildPrefixGet } = require('./funkcje.js')
+    const { musicCheck, djCheck } = require('./funkcje.js')
     const guildPrefixModel = require('./modele/guildPrefixSchema');
     global.owner = config.ownerID
 
     client.commands = new Discord.Collection();
     client.cooldowns = new Discord.Collection();
 
+    //szukanie komend
     const commandFolders = fs.readdirSync('./src/commands');
 
     for (const folder of commandFolders) {
@@ -21,48 +19,39 @@ module.exports = (client) => {
             client.commands.set(command.name, command);
         }
     }
-    //tabelga
-    client.on("ready", async () => {
-        const table = new ascii().setHeading("Komenda", "Folder", "Status").setBorder("│", "─");
-        for (const folder of commandFolders) {
-            const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith(".js"));
-
-            for (const file of commandFiles) {
-                const commandName = require(`./commands/${folder}/${file}`);
-                client.commands.set(commandName.name, commandName);
-                if (!commandName.name) table.addRow("-", folder, "❌");
-                else table.addRow(commandName.name, folder, "✅");
-            }
-        }
-        console.log(table.toString());
-    })
-
     //handler
     client.on('messageCreate', async message => {
+        //sprawdzamy czy jest prefix dla serwera jeżeli nie to dajemy domyślny
         let prefix;
-        if (global.databaseonline == true) {
+        if (global.databaseonline) {
             let result = await guildPrefixModel.findOne({guildID: message.guild.id});
             if (result === null) prefix = global.gprefix;
             else prefix = result.prefix;
         }
         else prefix = global.gprefix;
+        //Reakcja na @bot
+        if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`){
+            if (message.guild.me.isCommunicationDisabled() === true) return;
+            message.channel.send({ content: `Hej! Mój prefix to ${prefix}`})
+        }
+        //Sprawdzamy czy wiadomość zaczyna się do prefixu i czy nie jest od bota
         if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
 
+        //tu argumenty robione
         const args = message.content.slice(prefix.length).trim().split(/ +/);
+
+        //Sprawdzanie czy komenda/alias istnieje
         const commandName = args.shift().toLowerCase();
 
         const command = client.commands.get(commandName)
             || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
         if (!command) return;
 
+        //tu embed do wszystki command.xxx aby nie robić 2137 razy
         const embed = new Discord.MessageEmbed()
         embed.setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL());
 
-        if (command.guildOnly && message.channel.type === 'dm') {
-            return message.reply({content: 'Nie mogę wykonać komendy ponieważ ta komenda nie zadziała w prywatnych wiadomościach'});
-        }
-
+        //komenda tylko dla właściciela (id === config.ownerID)
         if (command.ownerOnly) {
             embed.setColor("#ff0000")
             embed.setDescription(':x: Ta komenda jest tylko dla dewelopera bota')
@@ -70,20 +59,22 @@ module.exports = (client) => {
             if (!global.owner.includes(message.author.id)) return message.channel.send({embeds: [embed]});
         }
 
+        //sprawdzanie czy użytkownik podał argumenty gdy wymagane
         if (command.args && !args.length) {
             let reply = `Nie podałeś żadnych argumentów`;
 
+            //i poprawne użycie jak jest podane
             if (command.usage) {
                 reply += `\nPoprawne użycie to: \`${prefix}${command.name} ${command.usage}\``;
             }
-
             return message.reply(reply);
         }
 
-
+        //sprawdzanie czy user ma permisje do użycia komendy
         if (command.userPermissions && command.userPermissions.length) {
-            if (message.content.includes(" -w") && message.author.id === global.owner && !message.member.permissionsIn(message.channel).has(command.userPermissions)) {
-                message.channel.send(`Użycie Komendy zostanie wymuszone a informacja zostanie wysłana na kanał <#${config.abusechannel}>`)
+            if (command.category === 'mus') {
+                if (!djCheck(message)) return;
+            } else if (message.content.includes(" -w") && message.author.id === global.owner && !message.member.permissionsIn(message.channel).has(command.userPermissions) && command.category !== 'moderacja') {
                 client.channels.cache.get(config.abusechannel).send(`użytkownik \`${message.author.username}\` (${message.author.id}) wymusił użycie komendy \`${command.name}\` na serwerze \`${message.guild.name}\` (${message.guild.id})`)
             } else if (!message.member.permissionsIn(message.channel).has(command.userPermissions)) {
                 embed.setColor("#ff0000")
@@ -92,6 +83,7 @@ module.exports = (client) => {
             }
         }
 
+        //sprawdzanie czy bot ma permisje do wykonania komendy
         if (command.botPermissions && command.botPermissions.length) {
             if (!message.guild.me.permissionsIn(message.channel).has(command.botPermissions)) {
                 embed.setColor("#ff0000")
@@ -99,10 +91,10 @@ module.exports = (client) => {
                 return message.channel.send({embeds: [embed]})
             }
         }
-
+        //flaga -h (help)
         if (message.content.toLowerCase().includes(" -h")) {
             if (!command.description) return message.channel.send("Ta komenda nie ma jeszcze helpa/opisu");
-            embed.setTitle(`Help komendy ${command.name} (BETA)`)
+            embed.setTitle(`Help komendy ${command.name}`)
             embed.addField("**Opis:**", `${command.description}`)
             if (!command.usage) embed.addField(`**Użycie:**`, prefix + command.name)
 
@@ -122,6 +114,20 @@ module.exports = (client) => {
             return message.channel.send({embeds: [embed]});
         }
 
+        //sprawdzamy czy użytkownik może używać komend muzycznych jeżeli `everyoneCanUseMusic` w configu nie
+        //wskazuje że każdy może.
+        if (command.musicAccessOnly) {
+            if (!config.everyoneCanUseMusic) {
+                let result = await musicCheck(message);
+                if (!result) {
+                    embed.setColor("#ff0000")
+                    embed.setDescription(':x: Ta komenda jest tylko dla osób z nadanym dostępem do muzyki.')
+                    return message.channel.send({embeds: [embed]});
+                }
+            }
+        }
+
+        //tutaj cooldowny
         if (message.author.id !== global.owner) {
             const {cooldowns} = client;
 
@@ -145,39 +151,18 @@ module.exports = (client) => {
             timestamps.set(message.author.id, now);
             setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
         }
-
+        //i tu wykonujemy komendę
         try {
-            if (message.guild.me.isCommunicationDisabled() === true) return;
-            if (command.category === "mus") {
-                musicCheck(message).then((result) => {
-                    const {MessageEmbed} = require("discord.js");
-                    const embed = new MessageEmbed()
-                    embed.setColor("#ff0000")
-                    embed.setDescription(':x: Ta komenda jest tylko dla osób z nadanym dostępem do muzyki.')
-                    embed.setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL());
-                    if (result === true) command.execute(message, args, client);
-                    if (result === false) message.channel.send({embeds: [embed]});
-                })
-            } else command.execute(message, args, client);
+            command.execute(message, args, client);
+            message.react('✅');
         } catch (error) {
+            message.react('❌');
             console.error(error);
-            let {makeid} = require("./funkcje.js");
-            let errorid = makeid(10);
+            let {makeID} = require("./funkcje.js");
+            let errorid = makeID(10);
             message.channel.send({content: `Wystąpił błąd, kod błędu: \`${errorid}\``});
             client.channels.cache.get(config.errorchannel).send({content: `Wystąpił błąd podczas używania komendy \`${command.name}\`, użył jej użytkownik o ID ${message.author.id} (${message.author.tag}).\nNumer błędu: ${errorid}\nTreść błędu:\n\`\`\`${error}\`\`\``});
             console.log("Kod Błędu: " + errorid);
         }
-    });
-    client.on('messageCreate', async message => {
-        if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`){
-            let prefix;
-            if (global.databaseonline == true) {
-                let result = await guildPrefixModel.findOne({guildID: message.guild.id});
-                if (result === null) prefix = global.gprefix;
-                else prefix = result.prefix;
-            }
-            else prefix = global.gprefix;
-            if (message.guild.me.isCommunicationDisabled() === true) return;
-            message.channel.send({ content: `Hej! Mój prefix to ${prefix}`})
-        }})
-    }
+    })
+};

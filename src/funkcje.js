@@ -1,11 +1,7 @@
+const userModel = require("./modele/userSchema");
+const guildModel = require("./modele/guildSchema");
 
 module.exports = {
-    sendmessage(channel, message) {
-        channel.send({content:message})
-    },
-    sendembed(channel) {
-        channel.send({embeds: ['embed']})
-    },
     sendtochannel(client, channel, message) {
         client.channels.cache.get(`${channel}`).send({content:message})
     },
@@ -19,7 +15,7 @@ module.exports = {
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
     },
     //kompletnie nie funkcja zajebana z neta
-    makeid(length) {
+    makeID(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         var charactersLength = characters.length;
@@ -44,5 +40,17 @@ module.exports = {
     },
     embedFooter(embed, message) {
     embed.setFooter(`Komenda wykonana przez ${message.author.tag}`, message.author.displayAvatarURL())
+    },
+    async djCheck(message) {
+        let result = true;
+        if (global.databaseonline === false) return result = false;
+        if (global.databaseonline === true) {
+            const djModel = require("./modele/guildDjRoleSchema");
+            let server = await djModel.findOne({guildID: `${message.guild.id}`})
+            if (!server) return result = false;
+            let djRole = server.djRoleID
+            if (message.member.roles.cache.has(djRole)) return result = true;
+            else return result = false;
+        }
     },
 }
