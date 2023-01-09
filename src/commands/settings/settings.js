@@ -1,7 +1,7 @@
 const {MessageActionRow, MessageButton, MessageEmbed} = require("discord.js");
 module.exports = {
     name: 'settings',
-    aliases: ['ustawienia'],
+    aliases: ['ustawienia', 'config'],
     description: 'Ustawienia bota',
     category: 'settings',
     async execute(message, args, client) {
