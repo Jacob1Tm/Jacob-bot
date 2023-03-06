@@ -11,6 +11,8 @@ module.exports = {
             `Używany przez ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}  użytkowników`,
             `Prefiks: ${global.prefix}`,
             `Wersja: ${global.v}`,
+            `Soon™️ in English (maybe)`,
+            `Help translating on crowdin (soon)`
         ]
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
     },
