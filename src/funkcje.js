@@ -1,6 +1,6 @@
 const userModel = require("./modele/userSchema");
 const guildModel = require("./modele/guildSchema");
-const config = require("./config.js);
+const config = require("./config.js");
 
 module.exports = {
     sendtochannel(client, channel, message) {
