@@ -1,5 +1,6 @@
 const userModel = require("./modele/userSchema");
 const guildModel = require("./modele/guildSchema");
+const config = require("./config.js");
 
 module.exports = {
     sendtochannel(client, channel, message) {
@@ -9,8 +10,10 @@ module.exports = {
         statuses = [
             `Używany przez ${client.guilds.cache.size} serwerów`,
             `Używany przez ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}  użytkowników`,
-            `Prefiks: ${global.prefix}`,
+            `Prefiks: ${config.prefix}`,
             `Wersja: ${global.v}`,
+            `Soon™️ in English (maybe)`,
+            `Help translating on crowdin (soon)`
         ]
         client.user.setActivity(statuses[Math.floor(Math.random() * statuses.length)], { type: "WATCHING" });
     },
