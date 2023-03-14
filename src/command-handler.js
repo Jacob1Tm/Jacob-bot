@@ -121,7 +121,7 @@ module.exports = (client) => {
                 let result = await musicCheck(message);
                 if (!result) {
                     embed.setColor("#ff0000")
-                    embed.setDescription(':x: Ta komenda jest tylko dla osób z nadanym dostępem do muzyki.')
+                    embed.setDescription(':x: Z powodu nie stabilności modułu muzycznego jest on tymczasowo wyłączony.')
                     return message.channel.send({embeds: [embed]});
                 }
             }
