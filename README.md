@@ -1,4 +1,4 @@
-# remembed that v2 is still in development and lots or features are not implemented or unfinished
+# remember that v2 is still in development and lots or features are not implemented or unfinished
 English version of readme soon (i think)
 
 ### Wymagania
