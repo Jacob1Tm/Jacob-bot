@@ -1,6 +1,8 @@
 # remember that v2 is still in development and lots or features are not implemented or unfinished
 English version of readme soon (i think)
 
+# Readme for now is outdated use pnpm :)
+
 ### Wymagania
 [Node 16.11.0+](https://nodejs.org/en/ "Node 16")\
 NPM (jest on wbudowany w node)\
