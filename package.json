@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "node ."
+    "start": "node .",
+    "lint": "eslint .",
+    "deploy" : "node ./src/etc/deployCommands.js",
+    "dev": "pnpm run deploy && pnpm run start"
   },
   "keywords": [],
   "author": "Jacob.Tm",
@@ -12,5 +15,8 @@
   "dependencies": {
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
   }
 }
