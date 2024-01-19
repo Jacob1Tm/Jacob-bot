@@ -8,14 +8,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+      - uses: pnpm/action-setup@v2
 
       - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
             node-version: 18
             cache: "pnpm"
-            
+
       - name: Install dependencies
         run: pnpm install
 
