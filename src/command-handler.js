@@ -10,7 +10,7 @@ module.exports = (client) => {
     client.cooldowns = new Discord.Collection();
 
     //szukanie komend
-    const commandFolders = fs.readdirSync('./src/commands');
+    const commandFolders = fs.readdirSync('./src/commands')
 
     for (const folder of commandFolders) {
         const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith('.js'));
