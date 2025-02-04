@@ -1,3 +1,15 @@
+# PLS KILL ME FOR THIS SHITTY CODE
+
+
+
+
+
+
+
+
+
+
+
 [![CodeFactor](https://www.codefactor.io/repository/github/jacob1tm/jacob-bot/badge)](https://www.codefactor.io/repository/github/jacob1tm/jacob-bot)
 ### Wymagania
 [Node 16](https://nodejs.org/en/ "Node 16")\
